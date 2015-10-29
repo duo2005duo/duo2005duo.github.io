@@ -1,32 +1,36 @@
 
  <!DOCTYPE HTML>
-<html >
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   
-    <title>Hello World | Hexo</title>
+    <title>Activity | Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
-    <meta name="author" content="John Doe">
+    <meta name="author" content="duo2005duo">
     
 
     
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+    <meta name="description" content="生命周期当一个AcitivityA启动另外一个AcitivityB时候，流程如下12345A.onPause()B.onCreate()B.onStart()B.onResume()A.onStop()
+这也暗示了如果B要使用A保存的信息，那么A保存信息的时机必须是onPause而不是onStop
+保存时机界面信息的保存可以利用onSaveInstanceState()方法保存，然后在onRest">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2015/10/26/hello-world/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
-<meta property="og:updated_time" content="2015-10-26T12:48:38.055Z">
+<meta property="og:title" content="Activity">
+<meta property="og:url" content="http://yoursite.com/2015/10/27/Activity/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="生命周期当一个AcitivityA启动另外一个AcitivityB时候，流程如下12345A.onPause()B.onCreate()B.onStart()B.onResume()A.onStop()
+这也暗示了如果B要使用A保存的信息，那么A保存信息的时机必须是onPause而不是onStop
+保存时机界面信息的保存可以利用onSaveInstanceState()方法保存，然后在onRest">
+<meta property="og:image" content="http://developer.android.com/images/activity_lifecycle.png">
+<meta property="og:updated_time" content="2015-10-28T12:25:56.780Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick">
+<meta name="twitter:title" content="Activity">
+<meta name="twitter:description" content="生命周期当一个AcitivityA启动另外一个AcitivityB时候，流程如下12345A.onPause()B.onCreate()B.onStart()B.onResume()A.onStop()
+这也暗示了如果B要使用A保存的信息，那么A保存信息的时机必须是onPause而不是onStop
+保存时机界面信息的保存可以利用onSaveInstanceState()方法保存，然后在onRest">
 
     
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="Blog" type="application/atom+xml">
     
     
     <link rel="icon" href="/img/favicon.ico">
@@ -44,24 +48,24 @@ Quick">
 <div>
 		
 			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="Hexo" title="Hexo"/></a>
+				<a href="/"><img src="/img/logo.png" alt="Blog" title="Blog"/></a>
 			</div>
 			
 			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="Hexo">Hexo</a></h1>
+				<h1 class="site-name"><a href="/" title="Blog">Blog</a></h1>
 				<h2 class="blog-motto"></h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
 					<ul>
 					 
-						<li><a href="/">Home</a></li>
+						<li><a href="/">主页</a></li>
 					
-						<li><a href="/archives">Archives</a></li>
+						<li><a href="/archives">目录</a></li>
 					
-						<li><a href="/about">About</a></li>
+						<li><a href="/about">关于</a></li>
 					
 					<li>
  					
@@ -83,40 +87,46 @@ Quick">
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2015/10/26/hello-world/" title="Hello World" itemprop="url">Hello World</a>
+      <a href="/2015/10/27/Activity/" title="Activity" itemprop="url">Activity</a>
   </h1>
   <p class="article-author">By
        
-		<a href="/about" title="John Doe" target="_blank" itemprop="author">John Doe</a>
+		<a href="/about" title="duo2005duo" target="_blank" itemprop="author">duo2005duo</a>
 		
   <p class="article-time">
-    <time datetime="2015-10-26T12:48:38.055Z" itemprop="datePublished"> 發表於 2015-10-26</time>
+    <time datetime="2015-10-27T02:46:24.000Z" itemprop="datePublished"> 发表于 2015-10-27</time>
     
   </p>
 </header>
 	<div class="article-content">
 		
 		<div id="toc" class="toc-article">
-			<strong class="toc-title">文章目錄</strong>
+			<strong class="toc-title">文章目录</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick_Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create_a_new_post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run_server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate_static_files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy_to_remote_sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#生命周期"><span class="toc-number">1.</span> <span class="toc-text">生命周期</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#保存时机"><span class="toc-number">1.1.</span> <span class="toc-text">保存时机</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#环境变化"><span class="toc-number">2.</span> <span class="toc-text">环境变化</span></a></li></ol>
 		
 		</div>
 		
-		<p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+		<h1 id="生命周期">生命周期</h1><p><img src="http://developer.android.com/images/activity_lifecycle.png" alt="Acitivity生命周期"><br>当一个AcitivityA启动另外一个AcitivityB时候，流程如下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">A.onPause()</span><br><span class="line">B.onCreate()</span><br><span class="line">B.onStart()</span><br><span class="line">B.onResume()</span><br><span class="line">A.onStop()</span><br></pre></td></tr></table></figure></p>
+<p>这也暗示了如果B要使用A保存的信息，那么A保存信息的时机必须是onPause而不是onStop</p>
+<h2 id="保存时机">保存时机</h2><p>界面信息的保存可以利用onSaveInstanceState()方法保存，然后在onRestoreInstanceState()或者onCreate()方法中还原。(启动应用第一次onCreate是不会传入Bundle的，可以用此进行null的判断来确定是不是第一次启动)<br>onSaveInstanceState(),onRestoreInstanceState()的执行时如下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Resumed</span><br><span class="line"><span class="title">onSaveInstanceState</span><span class="params">()</span></span><br><span class="line">Destoryed</span></span><br></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">onCreate</span><br><span class="line"><span class="title">onRestoreInstanceState</span><span class="params">()</span></span><br><span class="line">Resumed</span></span><br></pre></td></tr></table></figure>
+<p>但是对于需要持续化的信息，就必须在onPause或者onStop中提交保存，不能放在InstanceState相关的回调中，这是因为我们并不能确定InstanceState的回调时机，在3.0以前，onStop不能保证会被回调，只保证onPause被回调，但是3.0以后同时保证了onPause与onStop被回调，官方推荐在onPause中做轻量级的保存，在onStop中做重量级的保存。</p>
+<h1 id="环境变化">环境变化</h1><p>当语言环境，横竖屏等环境等变化时候，Activity会重新re-Create, 并且这是一个全新的实例。系统之所以这么做是为了让所有的Resource重新转载一遍。一般情况下，按照默认这种情况不会出现问题，但是当Activity的re-Create过程消耗太多资源时，我们就必须考虑优化方式了：</p>
+<ol>
+<li>RetainInstaceFragment： 设置Fragment为retainInstance，并添加get,set方法。</li>
+<li>自己处理环境变换不让系统处理：Activity添加android:configChanges（横竖屏是：orientation|keyboardHidden，3.2以上还要screenSize），回调onConfigurationChanged</li>
+</ol>
   
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Android基础/">Android基础</a>
+  </div>
 
 </div>
 
@@ -124,7 +134,7 @@ Quick">
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2015/10/26/hello-world/" data-title="Hello World | Hexo" data-tsina="null" class="share clearfix">
+	  <div data-url="http://yoursite.com/2015/10/27/Activity/" data-title="Activity | Blog" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -138,7 +148,7 @@ Quick">
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2015/10/27/test/" title="Fragment">
+ <a href="/2015/10/27/Fragment/" title="Fragment">
   <strong>上一篇：</strong><br/>
   <span>
   Fragment</span>
@@ -146,26 +156,34 @@ Quick">
 </div>
 
 
+<div class="next">
+<a href="/2015/10/27/Drawable介绍与自定义/"  title="Drawable介绍与自定义">
+ <strong>下一篇：</strong><br/> 
+ <span>Drawable介绍与自定义
+</span>
+</a>
+</div>
+
 </nav>
 
 	
 <section id="comments" class="comment">
-	<div class="ds-thread" data-thread-key="2015/10/26/hello-world/" data-title="Hello World" data-url="http://yoursite.com/2015/10/26/hello-world/"></div>
+	<div class="ds-thread" data-thread-key="2015/10/27/Activity/" data-title="Activity" data-url="http://yoursite.com/2015/10/27/Activity/"></div>
 </section>
 
 
 </div>  
-      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
   <div id="toc" class="toc-aside">
-  <strong class="toc-title">文章目錄</strong>
+  <strong class="toc-title">文章目录</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick_Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create_a_new_post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run_server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate_static_files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy_to_remote_sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#生命周期"><span class="toc-number">1.</span> <span class="toc-text">生命周期</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#保存时机"><span class="toc-number">1.1.</span> <span class="toc-text">保存时机</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#环境变化"><span class="toc-number">2.</span> <span class="toc-text">环境变化</span></a></li></ol>
  
   </div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
 <aside class="clearfix">
 
   
@@ -175,11 +193,15 @@ Quick">
 
   
 <div class="tagslist">
-	<p class="asidetitle">標簽</p>
+	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Android基础/" title="Android基础">Android基础<sup>1</sup></a></li>
+				<li><a href="/tags/Android基础/" title="Android基础">Android基础<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Android开发/" title="Android开发">Android开发<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -187,7 +209,7 @@ Quick">
 
 
   <div class="linkslist">
-  <p class="asidetitle">友情鏈接</p>
+  <p class="asidetitle">友情链接</p>
     <ul>
         
           <li>
@@ -209,7 +231,7 @@ Quick">
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
 
   <div class="weiboshow">
@@ -254,7 +276,7 @@ Quick">
 		<p class="copyright">
 		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
 		
-		<a href="/about" target="_blank" title="John Doe">John Doe</a>
+		<a href="/about" target="_blank" title="duo2005duo">duo2005duo</a>
 		
 		
 		</p>
@@ -437,7 +459,7 @@ $(document).ready(function(){
 
 <script type="text/javascript">
 var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fe6d1f421bbc9962127a50488f9ed37d1' type='text/javascript'%3E%3C/script%3E"));
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0ed5e1a8cf18ae4dc1d5ea1a6b54b7d3' type='text/javascript'%3E%3C/script%3E"));
 </script>
 
 
@@ -447,7 +469,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
@@ -455,6 +477,35 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <!-- MathJax Begin -->
 <!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
 
 <!-- MathJax End -->

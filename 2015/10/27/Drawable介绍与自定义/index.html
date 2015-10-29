@@ -1,0 +1,628 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Drawable介绍与自定义 | Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="duo2005duo">
+    
+
+    
+    <meta name="description" content="介绍Drawable是一种能画在Canvas的抽象，它的一个核心方法drawable.draw(Canvas)将自身的内容画在Canvas上。与Drawable密切联系的是View与Canvas，他们的关系如下
+
+
+
+元素
+比喻
+
+
+
+
+View
+艺术家
+
+
+Canvas
+画板
+
+
+Drawable
+艺术家脑子的的图案
+
+
+
+整个画画的过程就是 ，艺术家（View）将抽象的图案（Drawable）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Drawable介绍与自定义">
+<meta property="og:url" content="http://yoursite.com/2015/10/27/Drawable介绍与自定义/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="介绍Drawable是一种能画在Canvas的抽象，它的一个核心方法drawable.draw(Canvas)将自身的内容画在Canvas上。与Drawable密切联系的是View与Canvas，他们的关系如下
+
+
+
+元素
+比喻
+
+
+
+
+View
+艺术家
+
+
+Canvas
+画板
+
+
+Drawable
+艺术家脑子的的图案
+
+
+
+整个画画的过程就是 ，艺术家（View）将抽象的图案（Drawable）">
+<meta property="og:image" content="http://www.plantuml.com/plantuml/svg/SobAB4zCoadLjGlBJ2stIayjySmhBYdApFD8pKpFAD7Gr4S8XMUcb6HeQ2hewnUNfgUd5fTmWVJeshb0pR0gJYrnoY_DIodMq4INIW4od1FpoXABDI2K9W00">
+<meta property="og:image" content="http://www.plantuml.com/plantuml/svg/2orEBTAr2yjCBRSgJYrnIapEJY_ABqtHqEG2YUdQkHGbbYScvQI2P9qJStAIW2g0aZ1XNJkOe9N2ansTpvVtQca5f-QaFPksyzdcgLmmIQWDcNbbYIcPYIMf6few1Vd59Oub8Pcv84vHQcv-MIh2V000">
+<meta property="og:image" content="http://www.plantuml.com/plantuml/svg/2orEBTAryynDJ4yDoqmjjofEBG5pjBGqDBdWmhfsBaM9vOb9EQaW1Sw9EJb9YSdPG1KmOLqxcA2LmfCTdS-Nzsff1QVcf3sRjlFPvgbSC4bacpBpoX9JCXDBKZKqTGhoYqiSIq8oSq6SejJS_B9KX2K0">
+<meta property="og:updated_time" content="2015-10-29T01:41:33.989Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Drawable介绍与自定义">
+<meta name="twitter:description" content="介绍Drawable是一种能画在Canvas的抽象，它的一个核心方法drawable.draw(Canvas)将自身的内容画在Canvas上。与Drawable密切联系的是View与Canvas，他们的关系如下
+
+
+
+元素
+比喻
+
+
+
+
+View
+艺术家
+
+
+Canvas
+画板
+
+
+Drawable
+艺术家脑子的的图案
+
+
+
+整个画画的过程就是 ，艺术家（View）将抽象的图案（Drawable）">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Blog" title="Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Blog">Blog</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">目录</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/10/27/Drawable介绍与自定义/" title="Drawable介绍与自定义" itemprop="url">Drawable介绍与自定义</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="duo2005duo" target="_blank" itemprop="author">duo2005duo</a>
+		
+  <p class="article-time">
+    <time datetime="2015-10-27T02:46:24.000Z" itemprop="datePublished"> 发表于 2015-10-27</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#介绍"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Drawable的绘制"><span class="toc-number">2.</span> <span class="toc-text">Drawable的绘制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#静态绘制"><span class="toc-number">2.1.</span> <span class="toc-text">静态绘制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动态绘制"><span class="toc-number">2.2.</span> <span class="toc-text">动态绘制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动态绘制相关类"><span class="toc-number">2.3.</span> <span class="toc-text">动态绘制相关类</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Drawable其他机制："><span class="toc-number">3.</span> <span class="toc-text">Drawable其他机制：</span></a></li></ol>
+		
+		</div>
+		
+		<h1 id="介绍">介绍</h1><p>Drawable是一种能画在Canvas的抽象，它的一个核心方法<code>drawable.draw(Canvas)</code>将自身的内容画在Canvas上。与Drawable密切联系的是View与Canvas，他们的关系如下</p>
+<table>
+<thead>
+<tr>
+<th>元素</th>
+<th>比喻</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>View</td>
+<td>艺术家</td>
+</tr>
+<tr>
+<td>Canvas</td>
+<td>画板</td>
+</tr>
+<tr>
+<td>Drawable</td>
+<td>艺术家脑子的的图案</td>
+</tr>
+</tbody>
+</table>
+<p>整个画画的过程就是 ，<em>艺术家（View）</em>将<em>抽象的图案（Drawable）</em>具体画到 <em>画板（Canvas）</em>,这强调View同时操作了Canvas与Drawable</p>
+<h1 id="Drawable的绘制">Drawable的绘制</h1><h2 id="静态绘制">静态绘制</h2><p>静态绘制也就是说Drawable是静态的图案<br><img src="http://www.plantuml.com/plantuml/svg/SobAB4zCoadLjGlBJ2stIayjySmhBYdApFD8pKpFAD7Gr4S8XMUcb6HeQ2hewnUNfgUd5fTmWVJeshb0pR0gJYrnoY_DIodMq4INIW4od1FpoXABDI2K9W00"></p>
+<ol>
+<li>Drawable会先向View建议大小宽高，但是最终宽高还是由View说的算</li>
+<li>View通过drawable.setBounds()设置Drawable的最终宽高</li>
+<li>View再调用drawable.draw() 在Canvas画上Drawable</li>
+</ol>
+<h2 id="动态绘制">动态绘制</h2><p>动态绘制也就是说Drawable会画动态图案，动态绘制的Drawable一般会继承DrawableContainer，并且实现Runnable, Animatable，但是在实践中，继承DrawableContainer容易产生OOM的问题，这是因为在DrawableContainer里面每个元素都是强引用，元素太多就OOM啦。如AnimationDrawable：<br><code>public class AnimationDrawable extends DrawableContainer implements Runnable, Animatable</code></p>
+<h2 id="动态绘制相关类">动态绘制相关类</h2><ul>
+<li><p><strong>Animatable</strong>：</p>
+<figure class="highlight gherkin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">public interface Animatable &#123;</span><br><span class="line">    /<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line">     <span class="keyword">*</span> 开始动画</span><br><span class="line">     <span class="keyword">*</span>/</span><br><span class="line">    void start();</span><br><span class="line"></span><br><span class="line">    /<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line">     <span class="keyword">*</span> 结束动画</span><br><span class="line">     <span class="keyword">*</span>/</span><br><span class="line">    void stop();</span><br><span class="line"></span><br><span class="line">    /<span class="keyword">*</span><span class="keyword">*</span></span><br><span class="line">     <span class="keyword">*</span>动画是否在运行</span><br><span class="line">     <span class="keyword">*</span>/</span><br><span class="line">    boolean isRunning();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>CallBack</strong></p>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">interface</span> <span class="title">Callback</span> &#123;</span><br><span class="line">        <span class="comment">/**</span><br><span class="line">         * 简单来说，重新调View的draw方法</span><br><span class="line">         */</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">invalidateDrawable</span>(<span class="params">Drawable who</span>)</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span><br><span class="line">         * 在某一时刻实践执行 Runnable，如果说是延迟一段实践执行，则使用SystemClock.uptimeMillis()+延迟的时间 来代替when</span><br><span class="line">         */</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">scheduleDrawable</span>(<span class="params">Drawable who, Runnable what, <span class="keyword">long</span> <span class="keyword">when</span></span>)</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span><br><span class="line">         * 取消上一次的scheduleDrawable</span><br><span class="line">         */</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">unscheduleDrawable</span>(<span class="params">Drawable who, Runnable what</span>)</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<img src="http://www.plantuml.com/plantuml/svg/2orEBTAr2yjCBRSgJYrnIapEJY_ABqtHqEG2YUdQkHGbbYScvQI2P9qJStAIW2g0aZ1XNJkOe9N2ansTpvVtQca5f-QaFPksyzdcgLmmIQWDcNbbYIcPYIMf6few1Vd59Oub8Pcv84vHQcv-MIh2V000">
+<img src="http://www.plantuml.com/plantuml/svg/2orEBTAryynDJ4yDoqmjjofEBG5pjBGqDBdWmhfsBaM9vOb9EQaW1Sw9EJb9YSdPG1KmOLqxcA2LmfCTdS-Nzsff1QVcf3sRjlFPvgbSC4bacpBpoX9JCXDBKZKqTGhoYqiSIq8oSq6SejJS_B9KX2K0">
+<p>这里其实本来应该Drawable与View(ImageView)互调，但是加了个Callback解除了双向依赖，比如Listener也是这种原理。MVP的P调M的过程也经常用这种原理。</p>
+<ul>
+<li><strong>Drawable中三个对应方法</strong><br>Drawable中有invadiateSelf,sheduleSelf,unscheduleSelf三个方法分别对应Callback中三个接口，这样不用判断Callback是否为空，直接在Drawable中调用这三个实现好的方法即可。</li>
+</ul>
+<p>综上，实现动态的Drawable:</p>
+<ul>
+<li>Callback方面，View，ImageView已经为我们实现了，但由于Drawable需要向Callback.scheduleDrawable传入下一帧Runnable的回调，所以Callback通常也实现Runnable接口</li>
+<li>Drawable必须实现Animtable</li>
+</ul>
+<h1 id="Drawable其他机制：">Drawable其他机制：</h1><p>添加State状态支持</p>
+<ol>
+<li>重写isStateful方法，返回true</li>
+<li>setState中可以使用</li>
+</ol>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Android基础/">Android基础</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2015/10/27/Drawable介绍与自定义/" data-title="Drawable介绍与自定义 | Blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/10/27/Activity/" title="Activity">
+  <strong>上一篇：</strong><br/>
+  <span>
+  Activity</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/10/27/Service/"  title="Service">
+ <strong>下一篇：</strong><br/> 
+ <span>Service
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/10/27/Drawable介绍与自定义/" data-title="Drawable介绍与自定义" data-url="http://yoursite.com/2015/10/27/Drawable介绍与自定义/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#介绍"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Drawable的绘制"><span class="toc-number">2.</span> <span class="toc-text">Drawable的绘制</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#静态绘制"><span class="toc-number">2.1.</span> <span class="toc-text">静态绘制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动态绘制"><span class="toc-number">2.2.</span> <span class="toc-text">动态绘制</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#动态绘制相关类"><span class="toc-number">2.3.</span> <span class="toc-text">动态绘制相关类</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Drawable其他机制："><span class="toc-number">3.</span> <span class="toc-text">Drawable其他机制：</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Android基础/" title="Android基础">Android基础<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Android开发/" title="Android开发">Android开发<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://wuchong.me" target="_blank" title="Jark&#39;s Blog">Jark&#39;s Blog</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Larry Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/2176287895" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="/about" target="_blank" title="duo2005duo">duo2005duo</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"duo2005duo"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0ed5e1a8cf18ae4dc1d5ea1a6b54b7d3' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

@@ -1,28 +1,28 @@
 
  <!DOCTYPE HTML>
-<html >
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
   
-    <title>Hexo</title>
+    <title>Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
-    <meta name="author" content="John Doe">
+    <meta name="author" content="duo2005duo">
     
 
     
     <meta name="description">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
+<meta property="og:title" content="Blog">
 <meta property="og:url" content="http://yoursite.com/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Blog">
 <meta property="og:description">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hexo">
+<meta name="twitter:title" content="Blog">
 <meta name="twitter:description">
 
     
-    <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
+    <link rel="alternative" href="/atom.xml" title="Blog" type="application/atom+xml">
     
     
     <link rel="icon" href="/img/favicon.ico">
@@ -40,24 +40,24 @@
 <div>
 		
 			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="Hexo" title="Hexo"/></a>
+				<a href="/"><img src="/img/logo.png" alt="Blog" title="Blog"/></a>
 			</div>
 			
 			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="Hexo">Hexo</a></h1>
+				<h1 class="site-name"><a href="/" title="Blog">Blog</a></h1>
 				<h2 class="blog-motto"></h2>
 			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜單">
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
 			</a></div>
 			<nav class="animated">
 				<ul>
 					<ul>
 					 
-						<li><a href="/">Home</a></li>
+						<li><a href="/">主页</a></li>
 					
-						<li><a href="/archives">Archives</a></li>
+						<li><a href="/archives">目录</a></li>
 					
-						<li><a href="/about">About</a></li>
+						<li><a href="/about">关于</a></li>
 					
 					<li>
  					
@@ -75,169 +75,134 @@
     <div id="container">
       <div id="main">
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/10/27/test/" title="Fragment" itemprop="url">Fragment</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="John Doe" target="_blank" itemprop="author">John Doe</a>
-		
-  <p class="article-time">
-    <time datetime="2015-10-27T02:46:24.000Z" itemprop="datePublished"> 發表於 2015-10-27</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="Fragment">Fragment</h1><hr>
-<p>[TOC]</p>
-<hr>
-<p>##介绍<br>Fragment 可以用于实现UI，可以说是小型的Activity，一个Activity可以有多个Fragment，有利于复用，大致可以用一下公式表示：</p>
-<p><strong>Fragment ≈ UI + Activity的部分行为</strong>  </p>
-<p>Fragment除了做UI显示的功能外，还能做Acitivity重启过程的不变实例，这里有个作用就是做线程容器。通过在Fragment onCreate()方法添加setRetainInstance(true)，从而避免因为Activity的re-create过程中反复重复new线程</p>
-<p>##生命周期<br>生命周期直观上看，相比Acitivity，多出的生命期（attach,createView，activityCreated，destoryView,dettach）出现在onCreate与onDestroy前后<br><img src="http://developer.android.com/images/fragment_lifecycle.png" alt="fragment 生命周期"></p>
-<p>其中，值得注意的是，当Fragment remove并用addToBackStack(null)，这时候，Fragment不会Destory，其只会走到onDestroyView，等到popBackStack()再从onCreateView走起，当然，如果Activity在这个过程退出则Fragment还是会Destory的。<br>比较特别的是，Activity re-Create后,Activity实例变化，但是并不需要重新手动new Fragment实例，之前存在的Fragment，Acitivity会通过反射调用无惨构造器的方式new Fragment（猜测这个是通过saveInstanceState实现的，有待验证），当然，如果Fragment在fragment.oncreate的生命周期调用了setRetainInstance的话，Fragment会保持唯一实例</p>
-<p>##通信</p>
-<p>###Activity&lt;–&gt;Fragment<br>Fragment调用Activity方法： 这个过程用依赖导致，Frament内写一个需要调用到的接口，在Activity中实现，<br>通过Fragment中onAttach(Activity)获取到接口<br>过程如下<br>1.新建Fragment需要调用到的接口，通常写在相应的Fragment的内部，静态类形式<br>2.Activity实现这个接口<br>3.Fragment在onAttach（Activity）回调中尝试获取这个接口</p>
-<p>可能对于onBackPressed()有人喜欢用上面的方式，其实可以通过focus主View，再对主View加Key监听，这种方式能减少代码间的关联。</p>
-<p>Activity调用Fragment方法: 当然，在Acitivity中也有onAttach(Fragment),也可以用以上依赖导致方法，但是在实践中Fragment的onAttach时机并不是很可控，因为fragmenttransaction.commit之后不是立即执行的（当然这可以用FragmentMananger的executePendingTransations破），所以谷歌文档提供方式：findFragmentBy直接依赖。</p>
-<p>###Fragment&lt;—&gt;Fragment<br>让Activity作为中间人，也就是Fragment间的通信转化成Fragment与Acitvity的通信，还有getTargetFragment与setTargetFragment 的方法，这组方法保证获取到最新的实例,也可以通过这两个方法与Fragment.onActivityResult来配合模拟出类似startActivityForResult一样的返回结果。</p>
-<p>##嵌套<br>一般嵌套用getFragmentManger做操作即可，但是有些嵌套情况比较特殊，必须用getChildFramentManger，比如DialogFragment，原因如下:</p>
-<ul>
-<li>FragmentManger内对应了一个FragmentContainer的对象，这个对象限定了在哪个ViewGroup下查找。</li>
-<li>普通的getFragmentManager对应Activity的contentView，而在大多数情况下，Fragment也是加载contentView上的。但是，Dialogfragment对应Dialog的contentView，所以用普通的getFragmentManager只能在Activity的contentView中查找。所以，此时必须用getChildFragmentManager，强制在Fragment的onCreateView返回的View中查找View。</li>
-</ul>
-<p>综上，嵌套情况下优先使用getChildFragmentManger。</p>
-<p>##构造的局限性<br>Fragment在Activity re-create的过程中将重新通过反射调用其无参构造器初始化。这产生了两点限制：</p>
-<ol>
-<li>Fragment实现类必须拥有无参构造器以便re-create过程在框架中反射newInstance()</li>
-<li>Fragment如果拥有有参构造器，里面的传值必须统一传入Bundle,并最终用setArguments来设置，而且同时必须在onCreate的过程中getArguments来读取参数初始化，这是因为，在re-create过程中，Arguments将被保留。</li>
-</ol>
-<p>##线程容器</p>
-<p>###与Service线程容器的比较<br>Fragment可以作为线程容器，能实现线程容器的还有Service，但是Service的生命周期游离于Activity</p>
-<ul>
-<li><p>Service做线程容器，这个线程更多的要求是后台服务，而不是跟随Acitivity生命周期，更确切的说，Service作为线程容器，这个线程要求后台，而不是一定绑定这Acitivity。</p>
-</li>
-<li><p>Fragment作为线程容器，主要是为了避免因为Activity因外界条件重启而导致的重复启动线程，多用于定时更新Activity的界面。<br>###模式实现<br>RFragment命名空间内有UIFragment与WorkerFragment，Activity直接加载RFragment</p>
-</li>
-</ul>
-<p>有两个比较重要的方法 </p>
-<ul>
-<li>setRetainInstance，默认是false，Fragment每次重启都废弃原先的fragment实例，这个跟Acitivity一样，但是Fragment由于其特殊，可以添加这个方法设置true时候，Fragment每次重启都是用同一个实例，重启过程中会避开onCreate,onDestory,但是onDetach,onAttach，onActivityCreated依然有，这是因为Fragment重新绑定了新的Activity。</li>
-<li>setTargetFragment，getTargetFragment，这个方法锁定的Fragment，会自动获取到最新的对应fragment实例。不会因为Fragment因为重启重置实例而获取旧的Fragment实例，只会获取最新实例</li>
-</ul>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Title:&#21551;&#21160;&#27969;&#31243;&#65292;&#27880;&#24847;WorkerFragment&#22312;UiFragment&#30340;onActivityCreated&#20013;&#21551;&#21160;&#10;Acitvity-&#62;FragmentHolder: onCreate()&#21551;&#21160;&#10;FragmentHolder-&#62;UiFragment:onCreate()&#21551;&#21160;&#10;UiFragment-&#62;WorkerFragment:onAcitivityCreated()&#21551;&#21160;&#65292;&#20808;&#29992;findFragmentByTag&#21028;&#26029;&#23384;&#22312;</span><br></pre></td></tr></table></figure>
-<p>源码如下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span><br><span class="line"> * Copyright (C) 2010 The Android开源工程</span><br><span class="line"> *</span><br><span class="line"> * Licensed under the Apache License, Version 2.0 (the "License");</span><br><span class="line"> * you may not use this file except in compliance with the License.</span><br><span class="line"> * You may obtain a copy of the License at</span><br><span class="line"> *</span><br><span class="line"> *      http://www.apache.org/licenses/LICENSE-2.0</span><br><span class="line"> *</span><br><span class="line"> * Unless required by applicable law or agreed to in writing, software</span><br><span class="line"> * distributed under the License is distributed on an "AS IS" BASIS,</span><br><span class="line"> * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span><br><span class="line"> * See the License for the specific language governing permissions and</span><br><span class="line"> * limitations under the License.</span><br><span class="line"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">package</span> com.example.android.apis.app;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.example.android.apis.R;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> android.app.Activity;</span><br><span class="line"><span class="keyword">import</span> android.app.Fragment;</span><br><span class="line"><span class="keyword">import</span> android.app.FragmentManager;</span><br><span class="line"><span class="keyword">import</span> android.os.Bundle;</span><br><span class="line"><span class="keyword">import</span> android.view.LayoutInflater;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"><span class="keyword">import</span> android.view.ViewGroup;</span><br><span class="line"><span class="keyword">import</span> android.view.View.OnClickListener;</span><br><span class="line"><span class="keyword">import</span> android.widget.Button;</span><br><span class="line"><span class="keyword">import</span> android.widget.ProgressBar;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span><br><span class="line"> * This example shows how you can use a Fragment to easily propagate state</span><br><span class="line"> * (such as threads) across activity instances when an activity needs to be</span><br><span class="line"> * restarted due to, for example, a configuration change.  This is a lot</span><br><span class="line"> * easier than using the raw Activity.onRetainNonConfiguratinInstance() API.</span><br><span class="line"> */</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FragmentRetainInstance</span> <span class="keyword">extends</span> <span class="title">Activity</span> </span>&#123;</span><br><span class="line">    <span class="annotation">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// First time init, create the UI.</span></span><br><span class="line">        <span class="keyword">if</span> (savedInstanceState == <span class="keyword">null</span>) &#123;</span><br><span class="line">            getFragmentManager().beginTransaction().add(android.R.id.content,</span><br><span class="line">                    <span class="keyword">new</span> UiFragment()).commit();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * This is a fragment showing UI that will be updated from work done</span><br><span class="line">     * in the retained fragment.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">UiFragment</span> <span class="keyword">extends</span> <span class="title">Fragment</span> </span>&#123;</span><br><span class="line">        RetainedFragment mWorkFragment;</span><br><span class="line"></span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> View <span class="title">onCreateView</span><span class="params">(LayoutInflater inflater, ViewGroup container,</span><br><span class="line">                Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">            View v = inflater.inflate(R.layout.fragment_retain_instance, container, <span class="keyword">false</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Watch for button clicks.</span></span><br><span class="line">            Button button = (Button)v.findViewById(R.id.restart);</span><br><span class="line">            button.setOnClickListener(<span class="keyword">new</span> OnClickListener() &#123;</span><br><span class="line">                <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</span><br><span class="line">                    mWorkFragment.restart();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> v;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityCreated</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">super</span>.onActivityCreated(savedInstanceState);</span><br><span class="line"></span><br><span class="line">            FragmentManager fm = getFragmentManager();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Check to see if we have retained the worker fragment.</span></span><br><span class="line">            mWorkFragment = (RetainedFragment)fm.findFragmentByTag(<span class="string">"work"</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// If not retained (or first time running), we need to create it.</span></span><br><span class="line">            <span class="keyword">if</span> (mWorkFragment == <span class="keyword">null</span>) &#123;</span><br><span class="line">                mWorkFragment = <span class="keyword">new</span> RetainedFragment();</span><br><span class="line">                <span class="comment">// Tell it who it is working with.</span></span><br><span class="line">                mWorkFragment.setTargetFragment(<span class="keyword">this</span>, <span class="number">0</span>);</span><br><span class="line">                fm.beginTransaction().add(mWorkFragment, <span class="string">"work"</span>).commit();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span><br><span class="line">     * This is the Fragment implementation that will be retained across</span><br><span class="line">     * activity instances.  It represents some ongoing work, here a thread</span><br><span class="line">     * we have that sits around incrementing a progress indicator.</span><br><span class="line">     */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">RetainedFragment</span> <span class="keyword">extends</span> <span class="title">Fragment</span> </span>&#123;</span><br><span class="line">        ProgressBar mProgressBar;</span><br><span class="line">        <span class="keyword">int</span> mPosition;</span><br><span class="line">        <span class="keyword">boolean</span> mReady = <span class="keyword">false</span>;</span><br><span class="line">        <span class="keyword">boolean</span> mQuiting = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span><br><span class="line">         * This is the thread that will do our work.  It sits in a loop running</span><br><span class="line">         * the progress up until it has reached the top, then stops and waits.</span><br><span class="line">         */</span></span><br><span class="line">        <span class="keyword">final</span> Thread mThread = <span class="keyword">new</span> Thread() &#123;</span><br><span class="line">            <span class="annotation">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                <span class="comment">// We'll figure the real value out later.</span></span><br><span class="line">                <span class="keyword">int</span> max = <span class="number">10000</span>;</span><br><span class="line"></span><br><span class="line">                <span class="comment">// This thread runs almost forever.</span></span><br><span class="line">                <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// Update our shared state with the UI.</span></span><br><span class="line">                    <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">                        <span class="comment">// Our thread is stopped if the UI is not ready</span></span><br><span class="line">                        <span class="comment">// or it has completed its work.</span></span><br><span class="line">                        <span class="keyword">while</span> (!mReady || mPosition &gt;= max) &#123;</span><br><span class="line">                            <span class="keyword">if</span> (mQuiting) &#123;</span><br><span class="line">                                <span class="keyword">return</span>;</span><br><span class="line">                            &#125;</span><br><span class="line">                            <span class="keyword">try</span> &#123;</span><br><span class="line">                                wait();</span><br><span class="line">                            &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;</span><br><span class="line"></span><br><span class="line">                        <span class="comment">// Now update the progress.  Note it is important that</span></span><br><span class="line">                        <span class="comment">// we touch the progress bar with the lock held, so it</span></span><br><span class="line">                        <span class="comment">// doesn't disappear on us.</span></span><br><span class="line">                        mPosition++;</span><br><span class="line">                        max = mProgressBar.getMax();</span><br><span class="line">                        mProgressBar.setProgress(mPosition);</span><br><span class="line">                    &#125;</span><br><span class="line"></span><br><span class="line">                    <span class="comment">// Normally we would be doing some work, but put a kludge</span></span><br><span class="line">                    <span class="comment">// here to pretend like we are.</span></span><br><span class="line">                    <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</span><br><span class="line">                        <span class="keyword">try</span> &#123;</span><br><span class="line">                            wait(<span class="number">50</span>);</span><br><span class="line">                        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span><br><span class="line">         * Fragment initialization.  We way we want to be retained and</span><br><span class="line">         * start our thread.</span><br><span class="line">         */</span></span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">super</span>.onCreate(savedInstanceState);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Tell the framework to try to keep this fragment around</span></span><br><span class="line">            <span class="comment">// during a configuration change.</span></span><br><span class="line">            setRetainInstance(<span class="keyword">true</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Start up the worker thread.</span></span><br><span class="line">            mThread.start();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span><br><span class="line">         * This is called when the Fragment's Activity is ready to go, after</span><br><span class="line">         * its content view has been installed; it is called both after</span><br><span class="line">         * the initial fragment creation and after the fragment is re-attached</span><br><span class="line">         * to a new activity.</span><br><span class="line">         */</span></span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onActivityCreated</span><span class="params">(Bundle savedInstanceState)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">super</span>.onActivityCreated(savedInstanceState);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Retrieve the progress bar from the target's view hierarchy.</span></span><br><span class="line">            mProgressBar = (ProgressBar)getTargetFragment().getView().findViewById(</span><br><span class="line">                    R.id.progress_horizontal);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// We are ready for our thread to go.</span></span><br><span class="line">            <span class="keyword">synchronized</span> (mThread) &#123;</span><br><span class="line">                mReady = <span class="keyword">true</span>;</span><br><span class="line">                mThread.notify();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span><br><span class="line">         * This is called when the fragment is going away.  It is NOT called</span><br><span class="line">         * when the fragment is being propagated between activity instances.</span><br><span class="line">         */</span></span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDestroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="comment">// Make the thread go away.</span></span><br><span class="line">            <span class="keyword">synchronized</span> (mThread) &#123;</span><br><span class="line">                mReady = <span class="keyword">false</span>;</span><br><span class="line">                mQuiting = <span class="keyword">true</span>;</span><br><span class="line">                mThread.notify();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">super</span>.onDestroy();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span><br><span class="line">         * This is called right before the fragment is detached from its</span><br><span class="line">         * current activity instance.</span><br><span class="line">         */</span></span><br><span class="line">        <span class="annotation">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onDetach</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="comment">// This fragment is being detached from its activity.  We need</span></span><br><span class="line">            <span class="comment">// to make sure its thread is not going to touch any activity</span></span><br><span class="line">            <span class="comment">// state after returning from this function.</span></span><br><span class="line">            <span class="keyword">synchronized</span> (mThread) &#123;</span><br><span class="line">                mProgressBar = <span class="keyword">null</span>;</span><br><span class="line">                mReady = <span class="keyword">false</span>;</span><br><span class="line">                mThread.notify();</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">super</span>.onDetach();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">/**</span><br><span class="line">         * API for our UI to restart the progress thread.</span><br><span class="line">         */</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">restart</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">synchronized</span> (mThread) &#123;</span><br><span class="line">                mPosition = <span class="number">0</span>;</span><br><span class="line">                mThread.notify();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
   
-  <span></span> <a href="/tags/Android基础/">Android基础</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/10/27/test/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/10/27/test/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2015/10/27/Fragment/" title="Fragment" itemprop="url">
+  
+    <h1 itemprop="name">Fragment</h1>
     
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
+     
+           <p itemprop="description" >介绍Fragment 可以用于实现UI，可以说是小型的Activity，一个Activity可以有多个Fragment，有利于复用，大致可以用一下公式表示：
+Fragment ≈ UI + Activity的部分行为
+Fragment除了做UI显示的功能外，还能做Acitivit</p>
+        
     
-      <a href="/2015/10/26/hello-world/" title="Hello World" itemprop="url">Hello World</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="John Doe" target="_blank" itemprop="author">John Doe</a>
-		
-  <p class="article-time">
-    <time datetime="2015-10-26T12:48:38.055Z" itemprop="datePublished"> 發表於 2015-10-26</time>
+    <time datetime="2015-10-27T02:46:24.000Z" itemprop="datePublished">2015-10-27</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2015/10/27/Activity/" title="Activity" itemprop="url">
+  
+    <h1 itemprop="name">Activity</h1>
     
-  </p>
-</header>
-    <div class="article-content">
+     
+           <p itemprop="description" >生命周期当一个AcitivityA启动另外一个AcitivityB时候，流程如下12345A.onPause()B.onCreate()B.onStart()B.onResume()A.onStop()
+这也暗示了如果B要使用A保存的信息，那么A保存信息的时机必须是onPause</p>
         
-        <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick_Start">Quick Start</h2><h3 id="Create_a_new_post">Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run_server">Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate_static_files">Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+    
+    <time datetime="2015-10-27T02:46:24.000Z" itemprop="datePublished">2015-10-27</time>
+  </a>
+</section>
 
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2015/10/27/Drawable介绍与自定义/" title="Drawable介绍与自定义" itemprop="url">
+  
+    <h1 itemprop="name">Drawable介绍与自定义</h1>
+    
+     
+           <p itemprop="description" >介绍Drawable是一种能画在Canvas的抽象，它的一个核心方法drawable.draw(Canvas)将自身的内容画在Canvas上。与Drawable密切联系的是View与Canvas，他们的关系如下
+
+
+
+元素
+比喻
+
+
+
+
+View
+艺术家
+
+
+Canvas
+画板
+</p>
         
+    
+    <time datetime="2015-10-27T02:46:24.000Z" itemprop="datePublished">2015-10-27</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2015/10/27/Service/" title="Service" itemprop="url">
+  
+    <h1 itemprop="name">Service</h1>
+    
+     
+           <p itemprop="description" >Service的作用Service最大的优点在于：对于Service产生的长周期的Thread能被其他组件控制，Service更多的是用于启动 长周期 Thread，以便于更好的控制长周期Thread。这是由于没有组件的进程是空进程，很容易被回收。
+Service的三种形式
+St</p>
         
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
+    
+    <time datetime="2015-10-27T02:46:24.000Z" itemprop="datePublished">2015-10-27</time>
+  </a>
+</section>
+
+
+
+
+
+
+  
+<section class="post" itemscope itemprop="blogitem">
+  
+    <a href="/2015/10/27/Android之Touch/" title="Android之Touch" itemprop="url">
+  
+    <h1 itemprop="name">Android之Touch</h1>
+    
+     
+           <p itemprop="description" >事件分发基础基本触碰事件包括ACTION_DOWN，ACTION_MOVE,ACTION_UP,ACTION_CANCEL^actionMore触碰事件传递以Activity，ViewGroup, View的顺序依次传递^baseActivity
+Activity.dispatc</p>
+        
+    
+    <time datetime="2015-10-27T02:46:24.000Z" itemprop="datePublished">2015-10-27</time>
+  </a>
+</section>
+
+
+
+
+
 
 
 </div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/10/26/hello-world/#comments" class="ds-thread-count comments-count-link" data-thread-key="2015/10/26/hello-world/" data-count-type="comments">&nbsp;</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-
-</div>
-      <div class="openaside"><a class="navbutton" href="#" title="顯示側邊欄"></a></div>
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
 
 <div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="隱藏側邊欄"></a></div>
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
 <aside class="clearfix">
 
   
@@ -247,11 +212,15 @@
 
   
 <div class="tagslist">
-	<p class="asidetitle">標簽</p>
+	<p class="asidetitle">标签</p>
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Android基础/" title="Android基础">Android基础<sup>1</sup></a></li>
+				<li><a href="/tags/Android基础/" title="Android基础">Android基础<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Android开发/" title="Android开发">Android开发<sup>1</sup></a></li>
 			
 		
 		</ul>
@@ -259,7 +228,7 @@
 
 
   <div class="linkslist">
-  <p class="asidetitle">友情鏈接</p>
+  <p class="asidetitle">友情链接</p>
     <ul>
         
           <li>
@@ -281,7 +250,7 @@
 
 
   <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS 訂閱</a>
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
 </div>
 
   <div class="weiboshow">
@@ -326,7 +295,7 @@
 		<p class="copyright">
 		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
 		
-		<a href="/about" target="_blank" title="John Doe">John Doe</a>
+		<a href="/about" target="_blank" title="duo2005duo">duo2005duo</a>
 		
 		
 		</p>
@@ -432,7 +401,7 @@ $(document).ready(function(){
 
 <script type="text/javascript">
 var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fe6d1f421bbc9962127a50488f9ed37d1' type='text/javascript'%3E%3C/script%3E"));
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0ed5e1a8cf18ae4dc1d5ea1a6b54b7d3' type='text/javascript'%3E%3C/script%3E"));
 </script>
 
 
@@ -442,7 +411,7 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 <!-- Totop Begin -->
 
 	<div id="totop">
-	<a title="返回頂部"><img src="/img/scrollup.png"/></a>
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
 	</div>
 	<script src="/js/totop.js"></script>
 
@@ -450,6 +419,35 @@ document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3
 
 <!-- MathJax Begin -->
 <!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
 
 
 <!-- MathJax End -->

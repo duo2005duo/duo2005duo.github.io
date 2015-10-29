@@ -1,0 +1,564 @@
+
+ <!DOCTYPE HTML>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Service | Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="duo2005duo">
+    
+
+    
+    <meta name="description" content="Service的作用Service最大的优点在于：对于Service产生的长周期的Thread能被其他组件控制，Service更多的是用于启动 长周期 Thread，以便于更好的控制长周期Thread。这是由于没有组件的进程是空进程，很容易被回收。
+Service的三种形式
+Started: 由startService()方法调用，终结此种Service需要调用stopSelf()与stopSer">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Service">
+<meta property="og:url" content="http://yoursite.com/2015/10/27/Service/index.html">
+<meta property="og:site_name" content="Blog">
+<meta property="og:description" content="Service的作用Service最大的优点在于：对于Service产生的长周期的Thread能被其他组件控制，Service更多的是用于启动 长周期 Thread，以便于更好的控制长周期Thread。这是由于没有组件的进程是空进程，很容易被回收。
+Service的三种形式
+Started: 由startService()方法调用，终结此种Service需要调用stopSelf()与stopSer">
+<meta property="og:image" content="http://developer.android.com/images/service_lifecycle.png">
+<meta property="og:image" content="http://developer.android.com/images/fundamentals/service_binding_tree_lifecycle.png">
+<meta property="og:image" content="http://img.my.csdn.net/uploads/201205/30/1338350976_5741.png">
+<meta property="og:updated_time" content="2015-10-28T12:35:33.341Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Service">
+<meta name="twitter:description" content="Service的作用Service最大的优点在于：对于Service产生的长周期的Thread能被其他组件控制，Service更多的是用于启动 长周期 Thread，以便于更好的控制长周期Thread。这是由于没有组件的进程是空进程，很容易被回收。
+Service的三种形式
+Started: 由startService()方法调用，终结此种Service需要调用stopSelf()与stopSer">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Blog" title="Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Blog">Blog</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="菜单">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">主页</a></li>
+					
+						<li><a href="/archives">目录</a></li>
+					
+						<li><a href="/about">关于</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="搜索" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/10/27/Service/" title="Service" itemprop="url">Service</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="duo2005duo" target="_blank" itemprop="author">duo2005duo</a>
+		
+  <p class="article-time">
+    <time datetime="2015-10-27T02:46:24.000Z" itemprop="datePublished"> 发表于 2015-10-27</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">文章目录</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Service的作用"><span class="toc-number">1.</span> <span class="toc-text">Service的作用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Service的三种形式"><span class="toc-number">2.</span> <span class="toc-text">Service的三种形式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Start_Service"><span class="toc-number">3.</span> <span class="toc-text">Start Service</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Bind_Service"><span class="toc-number">4.</span> <span class="toc-text">Bind Service</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Service与进程优先级"><span class="toc-number">5.</span> <span class="toc-text">Service与进程优先级</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Service_Binder的线程进程关系"><span class="toc-number">6.</span> <span class="toc-text">Service Binder的线程进程关系</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Service生命周期"><span class="toc-number">7.</span> <span class="toc-text">Service生命周期</span></a></li></ol>
+		
+		</div>
+		
+		<h1 id="Service的作用">Service的作用</h1><p>Service最大的优点在于：对于Service产生的长周期的Thread能被其他组件控制，Service更多的是用于启动 长周期 Thread，以便于更好的控制长周期Thread。这是由于没有组件的进程是空进程，很容易被回收。</p>
+<h1 id="Service的三种形式">Service的三种形式</h1><ul>
+<li>Started: 由startService()方法调用，终结此种Service需要调用stopSelf()与stopService()方法。必须实现onStartCommand()方法。</li>
+<li>Bound:这种Service与Caller相当于Server与Client的关系，一个Service被多绑定，但是当所有Caller调用unbindService()时候会自我终结。需要实现onBind()方法，其会调用onBind()与onUnbind()</li>
+<li>Started&amp;Bound：为了Bound类型的Service避免其终结，通常利用startService()启动Service然后再用bindService()对其绑定。终结此类Service需要使用stopService()与unbindService()相互结合</li>
+</ul>
+<h1 id="Start_Service">Start Service</h1><ul>
+<li>继承IntentService（首选），能开工作线程同步执行请求<ul>
+<li>实现onHandleIntent（）方法，这个方法会再IntentService的工作线程中队列地执行</li>
+</ul>
+</li>
+<li>继承Service ，当有严格的异步要求时选择实现Service<ul>
+<li>实现onStartCommond（）方法所有组件的on回调都是在主线程上，所以，onStartCommond也不例外，所以为了防止卡主线程，一般在Service的onStartCommond中用户应该调用其他线程来执行代码。</li>
+</ul>
+</li>
+</ul>
+<h1 id="Bind_Service">Bind Service</h1><p>从返回类型看</p>
+<ul>
+<li>返回自己定义的Binder实现类，这种适合<strong>进程内</strong>通信，通常Binder实现类会返回整个Service或者封装特定的方法</li>
+<li>返回Messenger.getBinder(),这种适合<strong>进程间</strong>通信，并且这种方式能同步执行客户端请求，实用非常简单<ul>
+<li>两个构造器Messenger（handler）,Messenger（binder）,两个重要方法 getBinder(),send()</li>
+<li>在client发给server的Message的replyTo加载服务端的Messenger，实现双端通信</li>
+</ul>
+</li>
+<li>AIDL写法，可以实现<strong>进程间</strong>异步的请求，非特别要求异步推荐实用Messenger</li>
+</ul>
+<h1 id="Service与进程优先级">Service与进程优先级</h1><p>Service可以在进程优先级中的foreground，visiable, service</p>
+<ul>
+<li>foreground:<ul>
+<li>bind 可交互Activity</li>
+<li>在执行回调的过程中</li>
+<li>startForeground</li>
+</ul>
+</li>
+<li>visiable：<ul>
+<li>bind 可见的Activity</li>
+</ul>
+</li>
+<li>service ：<ul>
+<li>非以上情况但还没destroy</li>
+</ul>
+</li>
+</ul>
+<h1 id="Service_Binder的线程进程关系">Service Binder的线程进程关系</h1><ul>
+<li>onBind方法执行在Service进程的主进程中</li>
+<li>执行Binder回调的进程线程分下面两种情况<ul>
+<li>如果client跟Service是同一个进程，那么执行binder回调 的线程等同client</li>
+<li>如果client跟Service不在同一个进程，那么Service的进程会从线程池中拿出一个线程名BinderN来执行client的binder操作。这个过程默认是阻塞的，如果要求不阻塞，需要再aidl中添加oneway标志。具体看AIDL</li>
+</ul>
+</li>
+</ul>
+<h1 id="Service生命周期">Service生命周期</h1><p><img src="http://developer.android.com/images/service_lifecycle.png" alt="Service生命周期"></p>
+<p><img src="http://developer.android.com/images/fundamentals/service_binding_tree_lifecycle.png" alt="Service bind生命周期"></p>
+<p><img src="http://img.my.csdn.net/uploads/201205/30/1338350976_5741.png" alt="IntentService生命周期"></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Android基础/">Android基础</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2015/10/27/Service/" data-title="Service | Blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/10/27/Drawable介绍与自定义/" title="Drawable介绍与自定义">
+  <strong>上一篇：</strong><br/>
+  <span>
+  Drawable介绍与自定义</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/10/27/Android之Touch/"  title="Android之Touch">
+ <strong>下一篇：</strong><br/> 
+ <span>Android之Touch
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+<section id="comments" class="comment">
+	<div class="ds-thread" data-thread-key="2015/10/27/Service/" data-title="Service" data-url="http://yoursite.com/2015/10/27/Service/"></div>
+</section>
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="显示侧边栏"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">文章目录</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Service的作用"><span class="toc-number">1.</span> <span class="toc-text">Service的作用</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Service的三种形式"><span class="toc-number">2.</span> <span class="toc-text">Service的三种形式</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Start_Service"><span class="toc-number">3.</span> <span class="toc-text">Start Service</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Bind_Service"><span class="toc-number">4.</span> <span class="toc-text">Bind Service</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Service与进程优先级"><span class="toc-number">5.</span> <span class="toc-text">Service与进程优先级</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Service_Binder的线程进程关系"><span class="toc-number">6.</span> <span class="toc-text">Service Binder的线程进程关系</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Service生命周期"><span class="toc-number">7.</span> <span class="toc-text">Service生命周期</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="隐藏侧边栏"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">标签</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Android基础/" title="Android基础">Android基础<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Android开发/" title="Android开发">Android开发<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">友情链接</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://wuchong.me" target="_blank" title="Jark&#39;s Blog">Jark&#39;s Blog</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS 订阅</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">新浪微博</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=null&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Larry Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/2176287895" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2015 
+		
+		<a href="/about" target="_blank" title="duo2005duo">duo2005duo</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+<script type="text/javascript">
+  var duoshuoQuery = {short_name:"duo2005duo"};
+  (function() {
+    var ds = document.createElement('script');
+    ds.type = 'text/javascript';ds.async = true;
+    ds.src = '//static.duoshuo.com/embed.js';
+    ds.charset = 'UTF-8';
+    (document.getElementsByTagName('head')[0] 
+    || document.getElementsByTagName('body')[0]).appendChild(ds);
+  })();
+</script> 
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F0ed5e1a8cf18ae4dc1d5ea1a6b54b7d3' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="返回顶部"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>

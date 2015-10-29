@@ -11,20 +11,20 @@
     
 
     
-    <meta name="description" content="事件分发基础基本触碰事件包括ACTION_DOWN，ACTION_MOVE,ACTION_UP,ACTION_CANCEL^actionMore触碰事件传递以Activity，ViewGroup, View的顺序依次传递^baseActivity
-Activity.dispatchTouchEventActivity做为事件监听的起始点，会先把事件分发给DecorView,如果DecorView^">
+    <meta name="description" content="事件分发基础基本触碰事件包括ACTION_DOWN，ACTION_MOVE,ACTION_UP,ACTION_CANCEL选取Activity为本文的触碰事件讨论的起点,触碰事件传递以Activity，ViewGroup, View的顺序依次传递
+Activity.dispatchTouchEventActivity做为事件监听的起始点，会先把事件分发给DecorView,如果DecorView">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android之Touch">
 <meta property="og:url" content="http://yoursite.com/2015/10/27/Android之Touch/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="事件分发基础基本触碰事件包括ACTION_DOWN，ACTION_MOVE,ACTION_UP,ACTION_CANCEL^actionMore触碰事件传递以Activity，ViewGroup, View的顺序依次传递^baseActivity
-Activity.dispatchTouchEventActivity做为事件监听的起始点，会先把事件分发给DecorView,如果DecorView^">
+<meta property="og:description" content="事件分发基础基本触碰事件包括ACTION_DOWN，ACTION_MOVE,ACTION_UP,ACTION_CANCEL选取Activity为本文的触碰事件讨论的起点,触碰事件传递以Activity，ViewGroup, View的顺序依次传递
+Activity.dispatchTouchEventActivity做为事件监听的起始点，会先把事件分发给DecorView,如果DecorView">
 <meta property="og:image" content="http://www.plantuml.com/plantuml/svg/SqmgziaiBWdBJ2tNjND4SApoyqBoIvCpNCjIyqeqVFDBClFpm6o5r39DBaS2ka8BD32K1QGMfUKNvJhdP2PdMnMLvcbeSY4BeIaeW70yIr8X0XeWGnJAW8IEGYRG5GNvnPaWD-aevEJdfIjafg2RvfYIM52IMWHs5Hc68MdNjVFFWsi5-ISrBxK8w5E4SIKPcSKwKFCGPW6D0G00">
-<meta property="og:updated_time" content="2015-10-29T01:58:57.603Z">
+<meta property="og:updated_time" content="2015-10-29T09:56:11.115Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android之Touch">
-<meta name="twitter:description" content="事件分发基础基本触碰事件包括ACTION_DOWN，ACTION_MOVE,ACTION_UP,ACTION_CANCEL^actionMore触碰事件传递以Activity，ViewGroup, View的顺序依次传递^baseActivity
-Activity.dispatchTouchEventActivity做为事件监听的起始点，会先把事件分发给DecorView,如果DecorView^">
+<meta name="twitter:description" content="事件分发基础基本触碰事件包括ACTION_DOWN，ACTION_MOVE,ACTION_UP,ACTION_CANCEL选取Activity为本文的触碰事件讨论的起点,触碰事件传递以Activity，ViewGroup, View的顺序依次传递
+Activity.dispatchTouchEventActivity做为事件监听的起始点，会先把事件分发给DecorView,如果DecorView">
 
     
     <link rel="alternative" href="/atom.xml" title="Blog" type="application/atom+xml">
@@ -45,7 +45,7 @@ Activity.dispatchTouchEventActivity做为事件监听的起始点，会先把事
 <div>
 		
 			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="Blog" title="Blog"/></a>
+				<a href="/"><img src="/img/Android_Robot_100.png" alt="Blog" title="Blog"/></a>
 			</div>
 			
 			<div id="textlogo">
@@ -104,9 +104,9 @@ Activity.dispatchTouchEventActivity做为事件监听的起始点，会先把事
 		
 		</div>
 		
-		<h1 id="事件分发基础">事件分发基础</h1><p>基本触碰事件包括<code>ACTION_DOWN</code>，<code>ACTION_MOVE</code>,<code>ACTION_UP</code>,<code>ACTION_CANCEL</code><a href="更多Action请查看`MotionEvent`">^actionMore</a><br>触碰事件传递以Activity，ViewGroup, View的顺序依次传递<a href="选取Activity为本文的触碰事件讨论的起点">^baseActivity</a></p>
-<h2 id="Activity-dispatchTouchEvent">Activity.dispatchTouchEvent</h2><p>Activity做为事件监听的起始点，会先把事件分发给DecorView,如果DecorView<a href="Activity的根ViewGroup（FrameLayout），其子view是一个LinearLayout，这个LinearLayout由一个ViewStub（Title，ActionBar）和ContentView(Activity调用setContentView()设置)">^decorView</a>不做处理，才回调自己的onTouchEvent()</p>
-<p><strong>Activity.dispatchTouchEvent:</strong><br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Winodw.<span class="function"><span class="title">dispatch</span><span class="params">()</span></span>  <span class="comment">//i.e.  DecorView.dispatchTouchEvent</span></span><br><span class="line"><span class="keyword">if</span> DecorView.<span class="function"><span class="title">dispatchTouchEvent</span><span class="params">()</span></span></span><br><span class="line">    Activity.onTouchEvent</span><br></pre></td></tr></table></figure></p>
+		<h1 id="事件分发基础">事件分发基础</h1><p>基本触碰事件包括<code>ACTION_DOWN</code>，<code>ACTION_MOVE</code>,<code>ACTION_UP</code>,<code>ACTION_CANCEL</code><br>选取Activity为本文的触碰事件讨论的起点,触碰事件传递以Activity，ViewGroup, View的顺序依次传递</p>
+<h2 id="Activity-dispatchTouchEvent">Activity.dispatchTouchEvent</h2><p>Activity做为事件监听的起始点，会先把事件分发给DecorView,如果DecorView (Activity的根ViewGroup（FrameLayout），其子view是一个LinearLayout，这个LinearLayout由一个ViewStub（Title，ActionBar）和ContentView(Activity调用setContentView()设置))不做处理，才回调自己的onTouchEvent()</p>
+<p><strong>Activity.dispatchTouchEvent:</strong><br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">if</span> Winodw.<span class="function"><span class="title">superdispatchTouchEvent</span><span class="params">()</span></span>--&gt;DecorView.<span class="function"><span class="title">dispatchTouchEvent</span><span class="params">()</span></span></span><br><span class="line">    Activity.onTouchEvent</span><br></pre></td></tr></table></figure></p>
 <h2 id="ViewGroup-dispatchTouchEvent">ViewGroup.dispatchTouchEvent</h2><p>ViewGroup的分发流程相对其他复杂，主要分成两步：</p>
 <ol>
 <li><strong>获取Target列表</strong><ul>

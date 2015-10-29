@@ -24,7 +24,7 @@ Started: 由startService()方法调用，终结此种Service需要调用stopSelf
 <meta property="og:image" content="http://developer.android.com/images/service_lifecycle.png">
 <meta property="og:image" content="http://developer.android.com/images/fundamentals/service_binding_tree_lifecycle.png">
 <meta property="og:image" content="http://img.my.csdn.net/uploads/201205/30/1338350976_5741.png">
-<meta property="og:updated_time" content="2015-10-28T12:35:33.341Z">
+<meta property="og:updated_time" content="2015-10-29T02:13:14.100Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Service">
 <meta name="twitter:description" content="Service的作用Service最大的优点在于：对于Service产生的长周期的Thread能被其他组件控制，Service更多的是用于启动 长周期 Thread，以便于更好的控制长周期Thread。这是由于没有组件的进程是空进程，很容易被回收。
@@ -50,7 +50,7 @@ Started: 由startService()方法调用，终结此种Service需要调用stopSelf
 <div>
 		
 			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="Blog" title="Blog"/></a>
+				<a href="/"><img src="/img/Android_Robot_100.png" alt="Blog" title="Blog"/></a>
 			</div>
 			
 			<div id="textlogo">
@@ -130,7 +130,7 @@ Started: 由startService()方法调用，终结此种Service需要调用stopSelf
 <li>返回自己定义的Binder实现类，这种适合<strong>进程内</strong>通信，通常Binder实现类会返回整个Service或者封装特定的方法</li>
 <li>返回Messenger.getBinder(),这种适合<strong>进程间</strong>通信，并且这种方式能同步执行客户端请求，实用非常简单<ul>
 <li>两个构造器Messenger（handler）,Messenger（binder）,两个重要方法 getBinder(),send()</li>
-<li>在client发给server的Message的replyTo加载服务端的Messenger，实现双端通信</li>
+<li>在client发给server的Message的replyTo加载Client端定义的Messenger，实现双端通信</li>
 </ul>
 </li>
 <li>AIDL写法，可以实现<strong>进程间</strong>异步的请求，非特别要求异步推荐实用Messenger</li>
@@ -156,7 +156,7 @@ Started: 由startService()方法调用，终结此种Service需要调用stopSelf
 <li>onBind方法执行在Service进程的主进程中</li>
 <li>执行Binder回调的进程线程分下面两种情况<ul>
 <li>如果client跟Service是同一个进程，那么执行binder回调 的线程等同client</li>
-<li>如果client跟Service不在同一个进程，那么Service的进程会从线程池中拿出一个线程名BinderN来执行client的binder操作。这个过程默认是阻塞的，如果要求不阻塞，需要再aidl中添加oneway标志。具体看AIDL</li>
+<li>如果client跟Service不在同一个进程，那么Service的进程会从线程池中拿出一个线程名BinderN来执行client的binder操作。这个过程对于Client默认是阻塞的，如果要求不阻塞，需要再aidl中添加oneway标志。具体看AIDL</li>
 </ul>
 </li>
 </ul>

@@ -63,10 +63,10 @@ Drawable
 
 
 整个画画的过程就是 ，艺术家（View）将抽象的图案（Drawable）">
-<meta property="og:image" content="http://www.plantuml.com/plantuml/svg/SobAB4zCoadLjGlBJ2stIayjySmhBYdApFD8pKpFAD7Gr4S8XMUcb6HeQ2hewnUNfgUd5fTmWVJeshb0pR0gJYrnoY_DIodMq4INIW4od1FpoXABDI2K9W00">
+<meta property="og:image" content="http://www.plantuml.com/plantuml/svg/SobAB4zCoadLjGlBJ2stIayjySmhBYdApFD8pKpFAD7Gr4S8XMUcb6HeQ2hewnUNfgUd5fTmWVJeshb0pR0gJYrnoY_DIodMq4INIW4oD9mJyyeIYpK1">
 <meta property="og:image" content="http://www.plantuml.com/plantuml/svg/2orEBTAr2yjCBRSgJYrnIapEJY_ABqtHqEG2YUdQkHGbbYScvQI2P9qJStAIW2g0aZ1XNJkOe9N2ansTpvVtQca5f-QaFPksyzdcgLmmIQWDcNbbYIcPYIMf6few1Vd59Oub8Pcv84vHQcv-MIh2V000">
 <meta property="og:image" content="http://www.plantuml.com/plantuml/svg/2orEBTAryynDJ4yDoqmjjofEBG5pjBGqDBdWmhfsBaM9vOb9EQaW1Sw9EJb9YSdPG1KmOLqxcA2LmfCTdS-Nzsff1QVcf3sRjlFPvgbSC4bacpBpoX9JCXDBKZKqTGhoYqiSIq8oSq6SejJS_B9KX2K0">
-<meta property="og:updated_time" content="2015-10-29T01:41:33.989Z">
+<meta property="og:updated_time" content="2015-10-29T09:38:44.840Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Drawable介绍与自定义">
 <meta name="twitter:description" content="介绍Drawable是一种能画在Canvas的抽象，它的一个核心方法drawable.draw(Canvas)将自身的内容画在Canvas上。与Drawable密切联系的是View与Canvas，他们的关系如下
@@ -113,7 +113,7 @@ Drawable
 <div>
 		
 			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="Blog" title="Blog"/></a>
+				<a href="/"><img src="/img/Android_Robot_100.png" alt="Blog" title="Blog"/></a>
 			</div>
 			
 			<div id="textlogo">
@@ -196,7 +196,7 @@ Drawable
 </tbody>
 </table>
 <p>整个画画的过程就是 ，<em>艺术家（View）</em>将<em>抽象的图案（Drawable）</em>具体画到 <em>画板（Canvas）</em>,这强调View同时操作了Canvas与Drawable</p>
-<h1 id="Drawable的绘制">Drawable的绘制</h1><h2 id="静态绘制">静态绘制</h2><p>静态绘制也就是说Drawable是静态的图案<br><img src="http://www.plantuml.com/plantuml/svg/SobAB4zCoadLjGlBJ2stIayjySmhBYdApFD8pKpFAD7Gr4S8XMUcb6HeQ2hewnUNfgUd5fTmWVJeshb0pR0gJYrnoY_DIodMq4INIW4od1FpoXABDI2K9W00"></p>
+<h1 id="Drawable的绘制">Drawable的绘制</h1><h2 id="静态绘制">静态绘制</h2><p>静态绘制也就是说Drawable是静态的图案<br><img src="http://www.plantuml.com/plantuml/svg/SobAB4zCoadLjGlBJ2stIayjySmhBYdApFD8pKpFAD7Gr4S8XMUcb6HeQ2hewnUNfgUd5fTmWVJeshb0pR0gJYrnoY_DIodMq4INIW4oD9mJyyeIYpK1"></p>
 <ol>
 <li>Drawable会先向View建议大小宽高，但是最终宽高还是由View说的算</li>
 <li>View通过drawable.setBounds()设置Drawable的最终宽高</li>
@@ -213,7 +213,7 @@ Drawable
 </ul>
 <img src="http://www.plantuml.com/plantuml/svg/2orEBTAr2yjCBRSgJYrnIapEJY_ABqtHqEG2YUdQkHGbbYScvQI2P9qJStAIW2g0aZ1XNJkOe9N2ansTpvVtQca5f-QaFPksyzdcgLmmIQWDcNbbYIcPYIMf6few1Vd59Oub8Pcv84vHQcv-MIh2V000">
 <img src="http://www.plantuml.com/plantuml/svg/2orEBTAryynDJ4yDoqmjjofEBG5pjBGqDBdWmhfsBaM9vOb9EQaW1Sw9EJb9YSdPG1KmOLqxcA2LmfCTdS-Nzsff1QVcf3sRjlFPvgbSC4bacpBpoX9JCXDBKZKqTGhoYqiSIq8oSq6SejJS_B9KX2K0">
-<p>这里其实本来应该Drawable与View(ImageView)互调，但是加了个Callback解除了双向依赖，比如Listener也是这种原理。MVP的P调M的过程也经常用这种原理。</p>
+<p>这里其实本来应该Drawable与View(ImageView)互调，但是加了个Callback解除了双向依赖，比如Listener也是这种原理。</p>
 <ul>
 <li><strong>Drawable中三个对应方法</strong><br>Drawable中有invadiateSelf,sheduleSelf,unscheduleSelf三个方法分别对应Callback中三个接口，这样不用判断Callback是否为空，直接在Drawable中调用这三个实现好的方法即可。</li>
 </ul>

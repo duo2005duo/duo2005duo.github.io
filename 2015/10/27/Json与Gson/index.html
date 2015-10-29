@@ -21,7 +21,7 @@ JSon语法Json可以简单成以下的结构：一个花括号里面有各种 Ke
 JSon语法Json可以简单成以下的结构：一个花括号里面有各种 Key:Value的键值对1234567&amp;#123;    &quot;query&quot;: &quot;Pizza&quot;,    &quot;locations&quot;: [        94043,">
 <meta property="og:image" content="http://www.plantuml.com/plantuml/svg/yohEp_DFoafDBj6r2oufoinBjrB8WelfbUH313KqkI0CNJilkAoLGbvgkGA2hm5HeWa0">
 <meta property="og:image" content="http://www.plantuml.com/plantuml/svg/yohEptCiAagirBKBBYdAp4ktKiY22UcLv4F4D3Iv80nTEo-Of9L2Ncgv0foh0L6W2G00">
-<meta property="og:updated_time" content="2015-10-29T01:57:35.695Z">
+<meta property="og:updated_time" content="2015-10-29T06:48:10.923Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Json与Gson">
 <meta name="twitter:description" content="JsonJson是一种轻量级数据交换格式，便于人的读写，也便于机器的读写，而比较Xml而言，其更适用于机器读写，利用Gson能高效的将Json转化成一个Bean
@@ -46,7 +46,7 @@ JSon语法Json可以简单成以下的结构：一个花括号里面有各种 Ke
 <div>
 		
 			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="Blog" title="Blog"/></a>
+				<a href="/"><img src="/img/Android_Robot_100.png" alt="Blog" title="Blog"/></a>
 			</div>
 			
 			<div id="textlogo">
@@ -178,11 +178,13 @@ JSon语法Json可以简单成以下的结构：一个花括号里面有各种 Ke
 <h3 id="Object带泛型">Object带泛型</h3><p>Object带泛型的话，</p>
 <ol>
 <li><p>必须先获取Object的Type：</p>
-<p> Type type=new TypeToken<typeobject<t>&gt;(){}.getType();</typeobject<t></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Type type=<span class="keyword">new</span> TypeToken&lt;TypeObject&lt;T&gt;&gt;()&#123;&#125;.getType();</span><br></pre></td></tr></table></figure>
 </li>
-<li>利用type传入toJson()，fromJson()</li>
+<li><p>利用type传入toJson()，fromJson()</p>
+</li>
 </ol>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Foo</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">  T value;</span><br><span class="line">&#125;</span><br><span class="line">Gson gson = <span class="keyword">new</span> Gson();</span><br><span class="line">Type fooType = <span class="keyword">new</span> TypeToken&lt;Foo&lt;Bar&gt;&gt;() &#123;&#125;.getType();  <span class="comment">//获取type</span></span><br><span class="line">gson.toJson(foo, fooType);</span><br><span class="line"></span><br><span class="line">gson.fromJson(json, fooType);</span><br></pre></td></tr></table></figure>
+<p>注意TypeToken背后的大括号</p>
   
 	</div>
 		<footer class="article-footer clearfix">

@@ -11,23 +11,23 @@
     
 
     
-    <meta name="description" content="生命周期当一个AcitivityA启动另外一个AcitivityB时候，流程如下12345A.onPause()B.onCreate()B.onStart()B.onResume()A.onStop()
-这也暗示了如果B要使用A保存的信息，那么A保存信息的时机必须是onPause而不是onStop
-保存时机界面信息的保存可以利用onSaveInstanceState()方法保存，然后在onRest">
+    <meta name="description" content="生命周期需要清除的，上图虽然在onPause后能结束Activity，但是这在3.0版本后，需要onStop后才能结束Activity
+当一个AcitivityA启动另外一个AcitivityB时候，流程如下12345A.onPause()B.onCreate()B.onStart()B.onResume()A.onStop()
+这也暗示了如果B要使用A保存的信息，那么A保存信息的时机必须是onP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Activity">
 <meta property="og:url" content="http://yoursite.com/2015/10/27/Activity/index.html">
 <meta property="og:site_name" content="Blog">
-<meta property="og:description" content="生命周期当一个AcitivityA启动另外一个AcitivityB时候，流程如下12345A.onPause()B.onCreate()B.onStart()B.onResume()A.onStop()
-这也暗示了如果B要使用A保存的信息，那么A保存信息的时机必须是onPause而不是onStop
-保存时机界面信息的保存可以利用onSaveInstanceState()方法保存，然后在onRest">
+<meta property="og:description" content="生命周期需要清除的，上图虽然在onPause后能结束Activity，但是这在3.0版本后，需要onStop后才能结束Activity
+当一个AcitivityA启动另外一个AcitivityB时候，流程如下12345A.onPause()B.onCreate()B.onStart()B.onResume()A.onStop()
+这也暗示了如果B要使用A保存的信息，那么A保存信息的时机必须是onP">
 <meta property="og:image" content="http://developer.android.com/images/activity_lifecycle.png">
-<meta property="og:updated_time" content="2015-10-28T12:25:56.780Z">
+<meta property="og:updated_time" content="2015-10-29T03:45:50.904Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Activity">
-<meta name="twitter:description" content="生命周期当一个AcitivityA启动另外一个AcitivityB时候，流程如下12345A.onPause()B.onCreate()B.onStart()B.onResume()A.onStop()
-这也暗示了如果B要使用A保存的信息，那么A保存信息的时机必须是onPause而不是onStop
-保存时机界面信息的保存可以利用onSaveInstanceState()方法保存，然后在onRest">
+<meta name="twitter:description" content="生命周期需要清除的，上图虽然在onPause后能结束Activity，但是这在3.0版本后，需要onStop后才能结束Activity
+当一个AcitivityA启动另外一个AcitivityB时候，流程如下12345A.onPause()B.onCreate()B.onStart()B.onResume()A.onStop()
+这也暗示了如果B要使用A保存的信息，那么A保存信息的时机必须是onP">
 
     
     <link rel="alternative" href="/atom.xml" title="Blog" type="application/atom+xml">
@@ -48,7 +48,7 @@
 <div>
 		
 			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="Blog" title="Blog"/></a>
+				<a href="/"><img src="/img/Android_Robot_100.png" alt="Blog" title="Blog"/></a>
 			</div>
 			
 			<div id="textlogo">
@@ -107,11 +107,12 @@
 		
 		</div>
 		
-		<h1 id="生命周期">生命周期</h1><p><img src="http://developer.android.com/images/activity_lifecycle.png" alt="Acitivity生命周期"><br>当一个AcitivityA启动另外一个AcitivityB时候，流程如下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">A.onPause()</span><br><span class="line">B.onCreate()</span><br><span class="line">B.onStart()</span><br><span class="line">B.onResume()</span><br><span class="line">A.onStop()</span><br></pre></td></tr></table></figure></p>
-<p>这也暗示了如果B要使用A保存的信息，那么A保存信息的时机必须是onPause而不是onStop</p>
+		<h1 id="生命周期">生命周期</h1><p><img src="http://developer.android.com/images/activity_lifecycle.png" alt="Acitivity生命周期"><br>需要清除的，上图虽然在onPause后能结束Activity，但是这在3.0版本后，需要onStop后才能结束Activity</p>
+<p>当一个AcitivityA启动另外一个AcitivityB时候，流程如下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">A.onPause()</span><br><span class="line">B.onCreate()</span><br><span class="line">B.onStart()</span><br><span class="line">B.onResume()</span><br><span class="line">A.onStop()</span><br></pre></td></tr></table></figure></p>
+<p>这也暗示了如果B要使用A保存的信息，那么A保存信息的时机必须是onPause而不是onStop，而且注意其中微妙之处:B先Resume之后A才onStop<br>比较符合人类记忆的是 A失去交互之后，B迅速提高自己到交互，然后A才开始做后续操作</p>
 <h2 id="保存时机">保存时机</h2><p>界面信息的保存可以利用onSaveInstanceState()方法保存，然后在onRestoreInstanceState()或者onCreate()方法中还原。(启动应用第一次onCreate是不会传入Bundle的，可以用此进行null的判断来确定是不是第一次启动)<br>onSaveInstanceState(),onRestoreInstanceState()的执行时如下<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">Resumed</span><br><span class="line"><span class="title">onSaveInstanceState</span><span class="params">()</span></span><br><span class="line">Destoryed</span></span><br></pre></td></tr></table></figure></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">onCreate</span><br><span class="line"><span class="title">onRestoreInstanceState</span><span class="params">()</span></span><br><span class="line">Resumed</span></span><br></pre></td></tr></table></figure>
-<p>但是对于需要持续化的信息，就必须在onPause或者onStop中提交保存，不能放在InstanceState相关的回调中，这是因为我们并不能确定InstanceState的回调时机，在3.0以前，onStop不能保证会被回调，只保证onPause被回调，但是3.0以后同时保证了onPause与onStop被回调，官方推荐在onPause中做轻量级的保存，在onStop中做重量级的保存。</p>
+<p>但是onSaveInstanceState()与onRestoreInstanceState()这一对方法只使用与对临时的状态信息的保持，对于需要持续化的信息，就必须在onPause或者onStop中提交保存，不能放在InstanceState相关的回调中，这是因为我们并不能确定InstanceState的回调时机。对于持续化信息，在3.0以前，onStop不能保证会被回调，只保证onPause被回调，但是3.0以后同时保证了onPause与onStop被回调，官方推荐在onPause中做轻量级的保存，在onStop中做重量级的保存。</p>
 <h1 id="环境变化">环境变化</h1><p>当语言环境，横竖屏等环境等变化时候，Activity会重新re-Create, 并且这是一个全新的实例。系统之所以这么做是为了让所有的Resource重新转载一遍。一般情况下，按照默认这种情况不会出现问题，但是当Activity的re-Create过程消耗太多资源时，我们就必须考虑优化方式了：</p>
 <ol>
 <li>RetainInstaceFragment： 设置Fragment为retainInstance，并添加get,set方法。</li>
